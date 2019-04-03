@@ -141,6 +141,10 @@ export const Query = objectType({
 export const MoreQueryFields = extendType({
   type: "Query",
   definition(t) {
+    t.boolean("deprecatedField", {
+      deprecation: "This field is deprecated",
+      resolve: () => true,
+    });
     t.field("extended", {
       type: "Bar",
       resolve() {

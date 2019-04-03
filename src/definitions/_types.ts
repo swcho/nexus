@@ -26,6 +26,7 @@ export enum NexusTypes {
   WrappedType = "WrappedType",
   OutputField = "OutputField",
   InputField = "InputField",
+  Directive = "Directive",
 }
 
 export interface DeprecationInfo {

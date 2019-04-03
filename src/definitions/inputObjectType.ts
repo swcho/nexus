@@ -1,6 +1,7 @@
 import { NexusTypes, NonNullConfig, withNexusSymbol } from "./_types";
 import { InputDefinitionBlock } from "./definitionBlocks";
 import { assertValidName } from "graphql";
+import { arg, NexusArgDef } from "./args";
 
 export interface NexusInputObjectTypeConfig<TypeName extends string> {
   /**
@@ -35,6 +36,7 @@ export class NexusInputObjectTypeDef<TypeName extends string> {
     return this.config;
   }
 }
+
 withNexusSymbol(NexusInputObjectTypeDef, NexusTypes.InputObject);
 
 export function inputObjectType<TypeName extends string>(

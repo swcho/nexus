@@ -1,6 +1,7 @@
 // The "core" is used as a namespace to re-export everything,
 // For anyone who wants to use the internals
 export * from "./builder";
+export * from "./makeSchema";
 export * from "./sdlConverter";
 export * from "./typegen";
 export * from "./typegenAutoConfig";

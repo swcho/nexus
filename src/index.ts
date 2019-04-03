@@ -1,5 +1,6 @@
 // All of the Public API definitions
-export { buildTypes, makeSchema } from "./builder";
+export { buildTypes } from "./builder";
+export { makeSchema } from "./makeSchema";
 export {
   arg,
   booleanArg,
@@ -31,3 +32,4 @@ export {
 export { core, blocks };
 import * as core from "./core";
 import * as blocks from "./blocks";
+import { makeSchema } from "./makeSchema";

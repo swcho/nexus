@@ -319,13 +319,15 @@ export function typegenAutoConfig(options: TypegenAutoConfigOptions) {
 
     const imports: string[] = [];
 
-    Object.keys(importsMap).sort().forEach((alias) => {
-      const [importPath, glob] = importsMap[alias];
-      const safeImportPath = importPath.replace(/\\+/g, '/');
-      imports.push(
-        `import ${glob ? "* as " : ""}${alias} from "${safeImportPath}"`
-      );
-    });
+    Object.keys(importsMap)
+      .sort()
+      .forEach((alias) => {
+        const [importPath, glob] = importsMap[alias];
+        const safeImportPath = importPath.replace(/\\+/g, "/");
+        imports.push(
+          `import ${glob ? "* as " : ""}${alias} from "${safeImportPath}"`
+        );
+      });
 
     const typegenInfo = {
       headers: headers || [TYPEGEN_HEADER],

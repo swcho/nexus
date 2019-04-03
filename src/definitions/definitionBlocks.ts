@@ -15,6 +15,7 @@ import {
 } from "./wrapping";
 import { BaseScalars } from "./_types";
 import { GraphQLFieldResolver } from "graphql";
+import { NexusDirectiveRef } from "./directive";
 
 export interface CommonFieldConfig {
   /**
