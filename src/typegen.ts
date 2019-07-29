@@ -76,6 +76,7 @@ export class Typegen {
       this.printRootTypeMap(),
       this.printAllTypesMap(),
       this.printReturnTypeMap(),
+      this.printReturnTypeInfoMap(),
       this.printArgTypeMap(),
       this.printAbstractResolveReturnTypeMap(),
       this.printInheritedFieldMap(),
@@ -472,6 +473,15 @@ export class Typegen {
       "NexusGenFieldTypes",
       this.buildReturnTypeMap(),
       "field return type"
+    );
+  }
+
+  printReturnTypeInfoMap() {
+    console.log('printReturnTypeInfoMap')
+    return this.printTypeFieldInterface(
+      "NexusGenFieldTypeInfos",
+      this.buildReturnTypeMap(),
+      "field return type info"
     );
   }
 

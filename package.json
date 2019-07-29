@@ -10,6 +10,7 @@
     "dev": "yarn link-examples && tsc -w",
     "test": "jest",
     "build": "tsc && prettier --write 'dist/**/*.ts'",
+    "watch": "tsc --watch",
     "lint": "tslint -p tsconfig.json",
     "clean": "rm -rf dist",
     "format": "prettier --write 'src/**/*.ts'",
