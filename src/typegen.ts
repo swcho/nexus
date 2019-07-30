@@ -76,7 +76,7 @@ export class Typegen {
       this.printRootTypeMap(),
       this.printAllTypesMap(),
       this.printReturnTypeMap(),
-      this.printReturnTypeInfoMap(),
+      this.printFianlTypeMap(),
       this.printArgTypeMap(),
       this.printAbstractResolveReturnTypeMap(),
       this.printInheritedFieldMap(),
@@ -476,14 +476,81 @@ export class Typegen {
     );
   }
 
-  printReturnTypeInfoMap() {
-    console.log('printReturnTypeInfoMap')
+  //** Trials  */
+  printFianlTypeMap() {
+    console.log('printFianlTypeMap')
     return this.printTypeFieldInterface(
-      "NexusGenFieldTypeInfos",
-      this.buildReturnTypeMap(),
+      "NexusGenFinalFieldTypes",
+      this.buildFinalTypeMap(),
       "field return type info"
     );
   }
+
+  buildFinalTypeMap() {
+    const returnTypeMap: TypeFieldMapping = {};
+    const hasFields: (GraphQLInterfaceType | GraphQLObjectType)[] = [];
+    hasFields
+      .concat(this.groupedTypes.object)
+      .concat(this.groupedTypes.interface)
+      .filter((type) => ['Query', 'Mutation'].indexOf(type.name) !== -1)
+      .forEach((type) => {
+        eachObj(type.getFields(), (field) => {
+          returnTypeMap[type.name] = returnTypeMap[type.name] || {};
+          returnTypeMap[type.name][field.name] = [
+            ":",
+            this.printOutputFinalType(field.type),
+          ];
+        });
+      });
+    return returnTypeMap;
+  }
+
+  printOutputFinalType(type: GraphQLOutputType) {
+    const returnType = this.finalTypeToArr(type);
+    function combine(item: any[]): string {
+      if (item.length === 1) {
+        if (Array.isArray(item[0])) {
+          const toPrint = combine(item[0]);
+          return toPrint.indexOf("null") === -1
+            ? `${toPrint}[]`
+            : `Array<${toPrint}>`;
+        }
+        return item[0];
+      }
+      if (Array.isArray(item[1])) {
+        const toPrint = combine(item[1]);
+        return toPrint.indexOf("null") === -1
+          ? `${toPrint}[] | null`
+          : `Array<${toPrint}> | null`;
+      }
+      return `${item[1]} | null`;
+    }
+    return `${combine(returnType)}; // ${type}`;
+  }
+
+  finalTypeToArr(type: GraphQLOutputType): any[] {
+    const typing = [];
+    if (isNonNullType(type)) {
+      type = type.ofType;
+    } else {
+      typing.push(null);
+    }
+    if (isListType(type)) {
+      typing.push(this.finalTypeToArr(type.ofType));
+    } else if (isScalarType(type)) {
+      typing.push(this.printScalar(type));
+    } else if (isEnumType(type)) {
+      typing.push(`NexusGenEnums['${type.name}']`);
+    } else if (
+      isObjectType(type) ||
+      isInterfaceType(type) ||
+      isUnionType(type)
+    ) {
+      typing.push(`NexusGenFieldTypes['${type.name}']`);
+    }
+    return typing;
+  }
+  //** Trials  */
 
   normalizeArg(arg: GraphQLInputField | GraphQLArgument): [string, string] {
     return [this.argSeparator(arg.type), this.argTypeRepresentation(arg.type)];
