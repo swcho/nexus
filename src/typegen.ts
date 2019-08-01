@@ -120,6 +120,7 @@ export class Typegen {
         `  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']`,
         `  abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];`,
         `  abstractResolveReturn: NexusGenAbstractResolveReturnTypes;`,
+        `  fieldFinalTypes: NexusGenFinalFieldTypes;`,
       ])
       .concat("}")
       .join("\n");

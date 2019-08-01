@@ -111,6 +111,7 @@ export type AbstractResolveReturn<
 /**
  * Generated type helpers:
  */
+// export type GenTypesShapeKeys = keyof NexusGen;
 export type GenTypesShapeKeys =
   | "context"
   | "inputTypes"
@@ -129,7 +130,8 @@ export type GenTypesShapeKeys =
   | "allOutputTypes"
   | "allNamedTypes"
   | "abstractTypes"
-  | "abstractResolveReturn";
+  | "abstractResolveReturn"
+  | "fieldFinalTypes";
 
 /**
  * Helpers for handling the generated schema
